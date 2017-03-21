@@ -1,4 +1,4 @@
-// TS3AudioBot - An advanced Musicbot for Teamspeak 3
+﻿// TS3AudioBot - An advanced Musicbot for Teamspeak 3
 // Copyright (C) 2016  TS3AudioBot contributors
 //
 // This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ namespace TS3AudioBot.Helper
 		public bool Ok => !isError;
 		public string Message { get; }
 
-		private R(string message) { isError = true; Message = message; }
+		private R(string message) { isError = true; Message = message; Log.Write(Log.Level.Error, "R: {0}", message); }
 		/// <summary>Creates a new failed result with a message</summary>
 		/// <param name="message">The message</param>
 		public static R Err(string message) => new R(message);
@@ -57,7 +57,7 @@ namespace TS3AudioBot.Helper
 		public T Value { get; }
 
 		private R(T value) { isError = false; Message = null; if (value == null) throw new System.Exception("Return of ok must not be null."); Value = value; }
-		private R(string message) { isError = true; Message = message; Value = default(T); }
+		private R(string message) { isError = true; Message = message; Value = default(T); Log.Write(Log.Level.Error, "R<" + typeof(T).Name + ">: {0}", message); }
 
 		/// <summary>Creates a new failed result with a message</summary>
 		/// <param name="message">The message</param>
